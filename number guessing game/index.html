@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Guess a number (1 to 10)</h2>
+  <input type="number" id="guessInput" min="1" max="10">
+  <button onclick="checkGuess()" id="guessBtn">Check</button>
+  <p id="result"></p>
+  <button onclick="restartGame()" id="restartBtn" style="display:none;">Restart Game</button>
+
+
+
+  <script>
+
+    let computer, attempts;
+
+    function startGame(){
+      computer = Math.floor(Math.random() * 10) + 1;
+      attempts = 5;
+      document.getElementById("result").innerHTML = "";
+      document.getElementById("guessInput").value = "";
+      document.getElementById("guessBtn").disabled = false;
+      document.getElementById("restartBtn").style.display = "none";
+    }
+
+    function checkGuess() {
+      const guess = parseInt(document.getElementById("guessInput").value);
+      const result = document.getElementById("result");
+
+      if (guess === computer) {
+        result.textContent = "🎉 Correct! You win!";
+        endGame();
+      } else {
+        attempts--;
+        if (attempts > 0) {
+          result.textContent = `❌ Wrong! ${attempts} attempt(s) left.`;
+        } else {
+          result.textContent = `💀 Game Over! The number was ${computer}.`;
+          endGame();
+        }
+      }
+    }
+
+    function endGame() {
+      document.getElementById("guessBtn").disabled = true;
+      document.getElementById("restartBtn").style.display = "inline";
+    }
+
+    function restartGame() {
+      startGame();
+    }
+
+    startGame(); // start on page load
+  </script>
+</body>
+</html>
